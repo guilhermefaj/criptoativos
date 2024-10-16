@@ -1,3 +1,8 @@
+package br.com.voltz.service;
+
+import br.com.voltz.model.Transacao;
+import br.com.voltz.model.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -17,7 +22,6 @@ public class Monitoramento {
     public void gerarRelatorioUsuario(Usuario usuario) {
         System.out.println("\n--- Relatório do Usuário: " + usuario.getNome() + " ---");
 
-        //Organização de transações por nome de criptoativo
         Map<String, List<Transacao>> transacoesPorAtivo = new HashMap<>();
 
         for (Transacao transacao : usuario.getTransacoes()) {
@@ -25,10 +29,9 @@ public class Monitoramento {
             transacoesPorAtivo.computeIfAbsent(nomeAtivo, k -> new ArrayList<>()).add(transacao);
         }
 
-        //Separando por criptoativo
         for (String nomeAtivo : transacoesPorAtivo.keySet()) {
             List<Transacao> transacoes = transacoesPorAtivo.get(nomeAtivo);
-            System.out.println("\nAtivo: " + nomeAtivo);
+            System.out.println("Ativo: " + nomeAtivo);
             double saldoTotalAtivo = 0.0;
 
             for (Transacao transacao : transacoes) {
@@ -37,7 +40,6 @@ public class Monitoramento {
                         ", Valor: R$ " + transacao.getValor() +
                         ", Data: " + transacao.getData());
 
-                //Atualiza saldo
                 if (transacao.getTipo().equalsIgnoreCase("Compra")) {
                     saldoTotalAtivo -= transacao.getValor();
                 } else if (transacao.getTipo().equalsIgnoreCase("Venda")) {

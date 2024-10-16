@@ -1,3 +1,5 @@
+package br.com.voltz.service;
+
 public class Seguranca {
     private String nivelCriptografia;
     private int tentativasFalhas;

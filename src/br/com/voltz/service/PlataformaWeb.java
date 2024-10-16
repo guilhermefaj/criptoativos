@@ -1,3 +1,7 @@
+package br.com.voltz.service;
+
+import br.com.voltz.model.Usuario;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -10,7 +14,6 @@ public class PlataformaWeb {
         this.usuarios = new ArrayList<>();
     }
 
-    //Métodos
     public Usuario buscarUsuarioPorEmail(String email) {
         for (Usuario usuario : usuarios) {
             if (usuario.getEmail().equalsIgnoreCase(email)) {

@@ -1,3 +1,12 @@
+package br.com.voltz.view;
+
+import br.com.voltz.model.Ativo;
+import br.com.voltz.model.Transacao;
+import br.com.voltz.model.Usuario;
+import br.com.voltz.service.Monitoramento;
+import br.com.voltz.service.PlataformaWeb;
+import br.com.voltz.service.Seguranca;
+
 import java.util.Scanner;
 
 public class Main {
@@ -71,7 +80,6 @@ public class Main {
                     usuarioLogado.adicionarTransacao(transacao);
                     ativo.atualizarValor(valorTransacao);
                     break;
-
 
                 case 4:
                     if (usuarioLogado == null) {

@@ -1,3 +1,5 @@
+package br.com.voltz.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,6 @@ public class Usuario {
         this.saldoTotal = 0.0;
     }
 
-    // Getters
     public String getId() {
         return id;
     }

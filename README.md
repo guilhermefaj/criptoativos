@@ -35,7 +35,7 @@ mostrando:
 - Todas as transações realizadas para cada ativo.
 - O saldo total resultante das compras e vendas de cada ativo.
 
-### 4. **Monitoramento e Gráficos**
+### 4. **br.com.voltz.service.Monitoramento e Gráficos**
 
 A plataforma permite a geração de relatórios e gráficos que ajudam os usuários a monitorar suas transações ao longo do
 tempo, fornecendo insights sobre o desempenho dos criptoativos.
@@ -49,23 +49,23 @@ usuários. O sistema também autentica os acessos e monitora atividades suspeita
 
 ### Classes Principais
 
-- **PlataformaWeb**:
+- **br.com.voltz.service.PlataformaWeb**:
     - Gerencia os usuários, suas transações e gera relatórios.
     - Métodos principais:
-        - `registrarUsuario(Usuario usuario)`
+        - `registrarUsuario(br.com.voltz.model.Usuario usuario)`
         - `autenticarUsuario(String email, String senha)`
-        - `exibirRelatorios(Monitoramento monitoramento)`
-        - `gerarGraficoMonitoramento(Monitoramento monitoramento)`
+        - `exibirRelatorios(br.com.voltz.service.Monitoramento monitoramento)`
+        - `gerarGraficoMonitoramento(br.com.voltz.service.Monitoramento monitoramento)`
 
-- **Usuario**:
+- **br.com.voltz.model.Usuario**:
     - Representa um usuário da plataforma, contendo suas informações pessoais e transações.
     - Métodos principais:
         - `login()`
         - `logout()`
-        - `adicionarTransacao(Transacao transacao)`
+        - `adicionarTransacao(br.com.voltz.model.Transacao transacao)`
         - `getSaldoTotal()`
 
-- **Transacao**:
+- **br.com.voltz.model.Transacao**:
     - Representa uma transação de compra ou venda de criptoativos.
     - Atributos:
         - `idTransacao`: Identificador único da transação.
@@ -76,7 +76,7 @@ usuários. O sistema também autentica os acessos e monitora atividades suspeita
         - `executarTransacao()`
         - `cancelarTransacao()`
 
-- **Ativo**:
+- **br.com.voltz.model.Ativo**:
     - Representa um criptoativo (como Bitcoin, Dogecoin, etc.).
     - Atributos:
         - `idAtivo`: Identificador único do ativo.
@@ -87,13 +87,13 @@ usuários. O sistema também autentica os acessos e monitora atividades suspeita
         - `getNome()`
         - `atualizarValor(double novoValor)`
 
-- **Monitoramento**:
+- **br.com.voltz.service.Monitoramento**:
     - Gera relatórios e gráficos baseados nas transações do usuário.
     - Métodos principais:
         - `gerarRelatorioDiario()`
-        - `gerarRelatorioUsuario(Usuario usuario)`
+        - `gerarRelatorioUsuario(br.com.voltz.model.Usuario usuario)`
 
-- **Seguranca**:
+- **br.com.voltz.service.Seguranca**:
     - Garante a proteção das transações e autenticação dos usuários.
     - Métodos principais:
         - `criptografarDados()`
@@ -108,14 +108,14 @@ usuários. O sistema também autentica os acessos e monitora atividades suspeita
    Cada transação é associada a um ativo específico e atualiza o saldo do usuário.
 4. **Geração de relatórios**: O usuário pode solicitar relatórios detalhados que listam suas transações, separadas por
    criptoativo, além de visualizar o saldo total para cada ativo.
-5. **Monitoramento**: A plataforma gera gráficos e relatórios periódicos para ajudar o usuário a monitorar suas
+5. **br.com.voltz.service.Monitoramento**: A plataforma gera gráficos e relatórios periódicos para ajudar o usuário a monitorar suas
    transações e criptoativos ao longo do tempo.
 
 ## Como o Sistema Garante a Segurança
 
 - **Criptografia**: Os dados do usuário e as transações são protegidos por criptografia avançada.
 - **Autenticação de Acesso**: O sistema autentica cada acesso de usuário, verificando suas credenciais (email e senha).
-- **Monitoramento de Atividades Suspeitas**: A classe `Seguranca` monitora tentativas de login mal-sucedidas e outras
+- **br.com.voltz.service.Monitoramento de Atividades Suspeitas**: A classe `br.com.voltz.service.Seguranca` monitora tentativas de login mal-sucedidas e outras
   atividades suspeitas, garantindo a segurança da plataforma.
 
 ## Exemplo de Uso

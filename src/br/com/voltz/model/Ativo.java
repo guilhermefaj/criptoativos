@@ -1,3 +1,5 @@
+package br.com.voltz.model;
+
 public class Ativo {
     private String idAtivo;
     private String nome;

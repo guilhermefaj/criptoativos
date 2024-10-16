@@ -1,9 +1,11 @@
+package br.com.voltz.model;
+
 import java.util.Date;
 
 public class Transacao {
     private String idTransacao;
     private double valor;
-    private String tipo; // Compra ou Venda
+    private String tipo; // É bom fazer a edição para que o usuário selecione (COMPRA ou VENDA), olhar diagrama de classes
     private Date data;
     private Ativo ativo;
 
@@ -15,7 +17,6 @@ public class Transacao {
         this.ativo = ativo;
     }
 
-    // Getters
     public String getIdTransacao() {
         return idTransacao;
     }
@@ -36,7 +37,6 @@ public class Transacao {
         return ativo;
     }
 
-    // Métodos
     public void executarTransacao() {
         System.out.println("Transação " + tipo + " de valor " + valor + " executada em " + data.toString() +
                 " para o ativo " + ativo.getNome());
