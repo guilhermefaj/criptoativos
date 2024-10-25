@@ -1,8 +1,6 @@
 package br.com.voltz.view;
 
-import br.com.voltz.model.Ativo;
-import br.com.voltz.model.Transacao;
-import br.com.voltz.model.Usuario;
+import br.com.voltz.model.*;
 import br.com.voltz.service.Monitoramento;
 import br.com.voltz.service.PlataformaWeb;
 import br.com.voltz.service.Seguranca;
@@ -23,9 +21,10 @@ public class Main {
             System.out.println("\n--- Bem-vindo à Plataforma Cripto ---");
             System.out.println("1. Registrar novo usuário");
             System.out.println("2. Login");
-            System.out.println("3. Realizar Transação");
-            System.out.println("4. Gerar Relatório do Usuário");
-            System.out.println("5. Sair");
+            System.out.println("3. Realizar Venda de um Criptoativo:");
+            System.out.println("4. Realizar Compra de um Criptoativo:");
+            System.out.println("5. Gerar Relatório do Usuário");
+            System.out.println("6. Sair");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -65,23 +64,43 @@ public class Main {
                         break;
                     }
 
-                    // Realizar uma transação (compra ou venda)
+                    // Realizar uma transação venda
                     System.out.print("Digite o nome do ativo: ");
                     String ativoNome = scanner.nextLine();
                     System.out.print("Digite o valor da transação: ");
                     double valorTransacao = scanner.nextDouble();
                     scanner.nextLine();  // Consumir a linha restante
-                    System.out.print("Digite o tipo de transação (Compra/Venda): ");
-                    String tipoTransacao = scanner.nextLine();
+                    double idVenda = System.currentTimeMillis();
 
-                    Ativo ativo = new Ativo(String.valueOf(System.currentTimeMillis()), ativoNome, valorTransacao, 0.0);
-                    Transacao transacao = new Transacao(String.valueOf(System.currentTimeMillis()), valorTransacao, tipoTransacao, ativo);
-                    transacao.executarTransacao();
-                    usuarioLogado.adicionarTransacao(transacao);
-                    ativo.atualizarValor(valorTransacao);
+
+                    Ativo ativo1 = new Ativo(String.valueOf(System.currentTimeMillis()), ativoNome, valorTransacao, 0.0);
+                    Venda venda = new Venda(String.valueOf(System.currentTimeMillis()), valorTransacao, ativo1, 0.015, idVenda);
+                    System.out.println(venda.getexecutarTransacao());
+
+                    usuarioLogado.adicionarTransacao(venda);
+                    ativo1.atualizarValor(valorTransacao);
                     break;
-
                 case 4:
+                    if (usuarioLogado == null) {
+                        System.out.println("Faça login primeiro.");
+                        break;
+                    }
+
+                    // Realizar uma transação compra
+                    System.out.print("Digite o nome do ativo: ");
+                    String ativoCompra = scanner.nextLine();
+                    System.out.print("Digite o valor da transação: ");
+                    double valorCompra = scanner.nextDouble();
+                    scanner.nextLine();  // Consumir a linha restante
+                    double idCompra = System.currentTimeMillis();
+
+                    Ativo ativo2= new Ativo(String.valueOf(System.currentTimeMillis()), ativoCompra, valorCompra, 0.0);
+                    Compra compra = new Compra(String.valueOf(System.currentTimeMillis()), valorCompra, ativo2, 0.015);
+                    System.out.println(compra.getexecutarTransacao());
+                    usuarioLogado.adicionarTransacao(compra);
+                    ativo2.atualizarValor(valorCompra);
+                    break;
+                case 5:
                     if (usuarioLogado == null) {
                         System.out.println("Faça login primeiro.");
                         break;
@@ -91,7 +110,7 @@ public class Main {
                     monitoramento.gerarRelatorioUsuario(usuarioLogado);
                     break;
 
-                case 5:
+                case 6:
                     // Sair do sistema
                     continuar = false;
                     System.out.println("Saindo da plataforma. Até logo!");
