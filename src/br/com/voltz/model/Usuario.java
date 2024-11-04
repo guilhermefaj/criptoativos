@@ -10,6 +10,7 @@ public class Usuario {
     private String senha;
     private List<Transacao> transacoes;
     private double saldoTotal;
+    private  Carteira carteira;
 
     public Usuario(String id, String nome, String email, String senha) {
         this.id = id;
@@ -40,12 +41,24 @@ public class Usuario {
         return transacoes;
     }
 
+    public boolean gettemCarteira() {
+        return carteira != null;
+    }
+
+    public Carteira getCarteira() {
+        return carteira;
+    }
+
+    public void setCarteira(Carteira carteira) {
+        this.carteira = carteira;
+    }
+
     public void adicionarTransacao(Transacao transacao) {
         this.transacoes.add(transacao);
-        if (transacao.getTipo().equalsIgnoreCase("Compra")) { //Diminui o valor
-            saldoTotal -= transacao.getValor();
-        } else if (transacao.getTipo().equalsIgnoreCase("Venda")) { //Aumenta o valor
+        if (transacao instanceof Venda){ //Aumenta o valor
             saldoTotal += transacao.getValor();
+        } else if (transacao instanceof Compra) { //Diminui o valor
+            saldoTotal -= transacao.getValor();
         }
     }
 

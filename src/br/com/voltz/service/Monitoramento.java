@@ -1,8 +1,10 @@
 package br.com.voltz.service;
 
+import br.com.voltz.model.Compra;
 import br.com.voltz.model.Transacao;
 import br.com.voltz.model.Usuario;
-
+import br.com.voltz.model.Venda;
+import br.com.voltz.model.Compra;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -34,18 +36,21 @@ public class Monitoramento {
             System.out.println("Ativo: " + nomeAtivo);
             double saldoTotalAtivo = 0.0;
 
-            for (Transacao transacao : transacoes) {
-                System.out.println("ID: " + transacao.getIdTransacao() +
-                        ", Tipo: " + transacao.getTipo() +
-                        ", Valor: R$ " + transacao.getValor() +
-                        ", Data: " + transacao.getData());
 
-                if (transacao.getTipo().equalsIgnoreCase("Compra")) {
-                    saldoTotalAtivo -= transacao.getValor();
-                } else if (transacao.getTipo().equalsIgnoreCase("Venda")) {
-                    saldoTotalAtivo += transacao.getValor();
+            for (Transacao transacao: transacoes) {
+                if(transacao instanceof Venda venda){
+                    System.out.println("ID: " + venda.getIdvenda() +
+                        ", Valor: R$ " + venda.getValor() +
+                        ", Data: " + venda.getData());
+                saldoTotalAtivo -= venda.getValor();
+                }else if (transacao instanceof Compra compra){
+                    System.out.println( "ID: " + compra.getIdCompra()+
+                            ", Valor: R$ " + compra.getValor() +
+                            ", Data: " + compra.getData());
+                    saldoTotalAtivo += compra.getValor();
                 }
-            }
+
+                }
             System.out.println("Saldo total de " + nomeAtivo + ": R$ " + saldoTotalAtivo);
         }
     }

@@ -2,20 +2,21 @@ package br.com.voltz.model;
 
 import java.util.Date;
 
-public class Transacao {
+public abstract class Transacao {
     private String idTransacao;
     private double valor;
-    private String tipo; // É bom fazer a edição para que o usuário selecione (COMPRA ou VENDA), olhar diagrama de classes
     private Date data;
     private Ativo ativo;
-
-    public Transacao(String idTransacao, double valor, String tipo, Ativo ativo) {
+    private double taxa;
+   
+    public Transacao(String idTransacao, double valor, Ativo ativo, double taxa) {
         this.idTransacao = idTransacao;
         this.valor = valor;
-        this.tipo = tipo;
         this.data = new Date();
         this.ativo = ativo;
+        this.taxa = 0.015;
     }
+
 
     public String getIdTransacao() {
         return idTransacao;
@@ -25,9 +26,7 @@ public class Transacao {
         return valor;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
+
 
     public Date getData() {
         return data;
@@ -37,12 +36,14 @@ public class Transacao {
         return ativo;
     }
 
-    public void executarTransacao() {
-        System.out.println("Transação " + tipo + " de valor " + valor + " executada em " + data.toString() +
-                " para o ativo " + ativo.getNome());
+    public double getTaxa() {
+        return taxa;
     }
 
-    public void cancelarTransacao() {
-        System.out.println("Transação " + idTransacao + " cancelada.");
-    }
+    public abstract String getexecutarTransacao();
+
+    public abstract String getcancelarTransacao();
+
+    public abstract String getTaxaTransacao();
+
 }

@@ -1,5 +1,6 @@
 package br.com.voltz.model;
 
+
 import java.util.Date;
 
 public class Carteira {
@@ -27,6 +28,7 @@ public class Carteira {
 
     public Date getData() { return data; }
 
+
     public void adicionarQuantidade(double quantidade) {
         this.quantidade += quantidade;
     }
@@ -35,7 +37,7 @@ public class Carteira {
         this.quantidade -= quantidade;
     }
 
-    public void exibirInformações() {
+    public void getexibirInformacoes() {
         System.out.println("\n--- Informações da Carteira: " + getIdCarteira() + " ---"
             + "\n ID do Usuário: " + getUsuario()
             + ", ID do Ativo: " + getAtivo()
