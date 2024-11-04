@@ -1,11 +1,13 @@
 package br.com.voltz.view;
 
 import br.com.voltz.model.Ativo;
+import br.com.voltz.model.Carteira;
 import br.com.voltz.model.Transacao;
 import br.com.voltz.model.Usuario;
 import br.com.voltz.service.Monitoramento;
 import br.com.voltz.service.PlataformaWeb;
 import br.com.voltz.service.Seguranca;
+
 
 import java.util.Scanner;
 
@@ -25,7 +27,8 @@ public class Main {
             System.out.println("2. Login");
             System.out.println("3. Realizar Transação");
             System.out.println("4. Gerar Relatório do Usuário");
-            System.out.println("5. Sair");
+            System.out.println("5. Exibir informações da Carteira");
+            System.out.println("6. Sair");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -41,7 +44,9 @@ public class Main {
                     String senha = scanner.nextLine();
 
                     Usuario novoUsuario = new Usuario(String.valueOf(System.currentTimeMillis()), nome, email, senha);
+
                     plataforma.registrarUsuario(novoUsuario);
+
                     break;
 
                 case 2:
@@ -90,8 +95,24 @@ public class Main {
                     // Gerar relatório do usuário logado
                     monitoramento.gerarRelatorioUsuario(usuarioLogado);
                     break;
-
+                
                 case 5:
+                    if (usuarioLogado == null) {
+                        System.out.println("Faça login primeiro.");
+                        break;
+                    } else {
+                        // Exibe informações da Carteira
+                        Carteira carteira = usuarioLogado.buscarCarteiraPorUsuario();
+                        if (carteira != null) {
+                            carteira.exibirInformacoes();
+                            break;
+                        } else {
+                            System.out.println("Carteira não encontrada para o usuário.");
+                            break;
+                        }
+                    }
+
+                case 6:
                     // Sair do sistema
                     continuar = false;
                     System.out.println("Saindo da plataforma. Até logo!");

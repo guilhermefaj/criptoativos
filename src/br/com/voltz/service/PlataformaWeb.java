@@ -1,5 +1,6 @@
 package br.com.voltz.service;
 
+import br.com.voltz.model.Carteira;
 import br.com.voltz.model.Usuario;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 public class PlataformaWeb {
     private String nome;
     private List<Usuario> usuarios;
+    private List<Carteira> carteiras;
 
     public PlataformaWeb(String nome) {
         this.nome = nome;
@@ -18,6 +20,15 @@ public class PlataformaWeb {
         for (Usuario usuario : usuarios) {
             if (usuario.getEmail().equalsIgnoreCase(email)) {
                 return usuario;
+            }
+        }
+        return null;
+    }
+
+    public Carteira buscarCarteiraPorUsuario() {
+        for (Carteira carteira : carteiras) {
+            if (carteira.getUsuario().equals(carteira)) {
+                return carteira;
             }
         }
         return null;
@@ -40,6 +51,10 @@ public class PlataformaWeb {
     public void registrarUsuario(Usuario usuario) {
         usuarios.add(usuario);
         System.out.println("Usuário registrado: " + usuario.getNome());
+    }
+
+    public void registrarCarteira(Carteira carteira) {
+        System.out.println("Carteira registrada: " + carteira.getIdCarteira());
     }
 
     public void gerarGraficoMonitoramento(Monitoramento monitoramento) {

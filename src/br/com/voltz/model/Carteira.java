@@ -9,7 +9,7 @@ public class Carteira {
     private double quantidade;
     private Date data;
 
-    public Carteira(String idCarteira, Usuario usuario, Ativo ativo, double quantidade, Date data) {
+    public Carteira(String idCarteira, Usuario usuario, Ativo ativo, double quantidade) {
         this.idCarteira = idCarteira;
         this.usuario = usuario;
         this.quantidade = quantidade;
@@ -35,7 +35,7 @@ public class Carteira {
         this.quantidade -= quantidade;
     }
 
-    public void exibirInformações() {
+    public void exibirInformacoes() {
         System.out.println("\n--- Informações da Carteira: " + getIdCarteira() + " ---"
             + "\n ID do Usuário: " + getUsuario()
             + ", ID do Ativo: " + getAtivo()
