@@ -95,7 +95,7 @@ public class Main {
                             String ativoNome = scanner.nextLine();
                             System.out.print("Digite o valor da transação: ");
                             double valorTransacao = scanner.nextDouble();
-                            scanner.nextLine();  // Consumir a linha restante
+                            scanner.nextLine();
                             double idVenda = System.currentTimeMillis();
 
 
@@ -121,7 +121,7 @@ public class Main {
                             String ativoCompra = scanner.nextLine();
                             System.out.print("Digite o valor da transação: ");
                             double valorCompra = scanner.nextDouble();
-                            scanner.nextLine();  // Consumir a linha restante
+                            scanner.nextLine();
                             double idCompra = System.currentTimeMillis();
 
                             Ativo ativo2 = new Ativo(String.valueOf(System.currentTimeMillis()), ativoCompra, valorCompra, 0.0);
@@ -184,10 +184,10 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Por favor, insira um número válido.");
-                scanner.nextLine(); // Limpar o buffer do scanner
+                scanner.nextLine();
             } catch (Exception e) {
                 System.out.println("Ocorreu um erro inesperado: " + e.getMessage());
-                scanner.nextLine(); // Limpar o buffer do scanner
+                scanner.nextLine();
             }
         }
         scanner.close();
