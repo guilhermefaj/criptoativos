@@ -76,7 +76,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "ID: " + getId() + ", Nome: " + getNome() + ", Email: " + getEmail();
+        return getId() + ", Nome: " + getNome() + ", Email: " + getEmail();
     }
 
 }
