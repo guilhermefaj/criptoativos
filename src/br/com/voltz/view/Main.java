@@ -129,6 +129,13 @@ public class Main {
                             System.out.println(compra.getexecutarTransacao());
                             usuarioLogado.adicionarTransacao(compra);
                             ativo2.atualizarValor(valorCompra);
+
+                            Carteira carteiraUsuario = (Carteira) plataforma.buscarCarteiraPorUsuario(usuarioLogado);
+                            if (carteiraUsuario != null) {
+                                carteiraUsuario.adicionarQuantidade(valorCompra, ativo2);
+                            } else {
+                                System.out.println("Erro: Carteira não encontrada");
+                            }
                         } catch (Exception e) {
                             System.out.println("Erro ao realizar compra: " + e.getMessage());
                         }
@@ -148,23 +155,24 @@ public class Main {
                         break;
 
                     case 6:
-                    Carteira carteira = new Carteira(String.valueOf(System.currentTimeMillis()),usuarioLogado,null,0.0,new Date());
-                    if(usuarioLogado == null){
-                        System.out.println("Faça login primeiro.");
+                        if (usuarioLogado == null) {
+                            System.out.println("Faça login primeiro.");
+                            break;
+                        }
+                        
+                        Carteira carteiraExistente = (Carteira) plataforma.buscarCarteiraPorUsuario(usuarioLogado);
+                        
+                        if (carteiraExistente == null) {
+                            Carteira novaCarteira = new Carteira(String.valueOf(System.currentTimeMillis()), usuarioLogado, null, 0.0, new Date());
+                            System.out.println("O usuário " + usuarioLogado.getNome() + " não possui uma carteira, uma nova carteira será criada.");
+                            plataforma.adicionarCarteira(novaCarteira, usuarioLogado);
+                            System.out.println("Carteira adicionada para o usuário " + usuarioLogado.getNome());
+                            novaCarteira.getexibirInformacoes();
+                        } else {
+                            System.out.println("Carteira do usuário " + usuarioLogado.getNome());
+                            carteiraExistente.getexibirInformacoes();
+                        }
                         break;
-                    }
-                    Carteira carteiraExistente = new Carteira(String.valueOf(System.currentTimeMillis()), usuarioLogado, null, 0.0, new Date());
-
-                    if (carteiraExistente == null){
-                        System.out.println("O usuário "+ usuarioLogado + "não possui uma carteira, uma nova carteira será criada..");
-                        plataforma.adicionarCarteira(carteira, usuarioLogado);
-                        System.out.println("Carteira adicionada para o usuário "+ usuarioLogado.getNome());
-                        carteira.getexibirInformacoes();
-                    }else{
-                        System.out.println("Carteira do usuário "+ usuarioLogado.getNome());
-                        carteiraExistente.getexibirInformacoes();
-                    }
-                    break;
                     case 7:
                         // Sair do sistema
                         continuar = false;

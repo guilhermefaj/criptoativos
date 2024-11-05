@@ -30,8 +30,9 @@ public class Carteira {
 
 
 
-    public void adicionarQuantidade(double quantidade) {
+    public void adicionarQuantidade(double quantidade, Ativo ativo) {
         this.quantidade += quantidade;
+        this.ativo = ativo;
     }
 
     public void removerQuantidade(double quantidade) {
@@ -46,9 +47,8 @@ public class Carteira {
     public void getexibirInformacoes() {
         System.out.println("\n--- Informações da Carteira: " + getIdCarteira() + " ---"
             + "\n ID do Usuário: " + getUsuario()
-            + ", Id ativo: " + getIdCarteira()
-            + ", Quantidade disponível: " + getQuantidade()
-            + ", Data: " + getData());
-
+            + "\n Ativo: " + (getAtivo() != null ? getAtivo().getNome() : "Nenhum ativo")
+            + "\n Quantidade disponível: " + getQuantidade()
+            + "\n Data: " + getData());
     }
 }
