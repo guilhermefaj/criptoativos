@@ -73,4 +73,10 @@ public class Usuario {
     public void logout() {
         System.out.println("Usuário " + nome + " deslogado.");
     }
+
+    @Override
+    public String toString() {
+        return "ID: " + getId() + ", Nome: " + getNome() + ", Email: " + getEmail();
+    }
+
 }

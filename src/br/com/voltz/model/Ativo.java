@@ -1,4 +1,7 @@
 package br.com.voltz.model;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Ativo {
     private String idAtivo;
@@ -17,8 +20,18 @@ public class Ativo {
         return nome;
     }
 
+    public double getValorAtual() {
+        return valorAtual;
+    }
+
     public void atualizarValor(double novoValor) {
         this.valorAtual = novoValor;
         System.out.println("Valor do ativo " + nome + " atualizado para " + valorAtual);
     }
+
+    @Override
+    public String toString() {
+        return  "Nome: " + getNome() + "Valor Atual: " + getValorAtual();
+    }
+
 }

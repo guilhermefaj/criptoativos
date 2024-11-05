@@ -29,7 +29,7 @@ public class Compra extends Transacao {
 
     @Override
     public String getexecutarTransacao() {
-        double valorComTaxa = (getValor() * getTaxa())- getValor();
+        double valorComTaxa =- getValor()- (getValor() * getTaxa());
 
         String valorFormatado = String.format("%.2f", valorComTaxa);
 

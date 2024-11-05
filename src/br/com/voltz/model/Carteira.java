@@ -29,19 +29,25 @@ public class Carteira {
     public Date getData() { return data; }
 
 
+
     public void adicionarQuantidade(double quantidade) {
         this.quantidade += quantidade;
     }
 
     public void removerQuantidade(double quantidade) {
-        this.quantidade -= quantidade;
+        if (this.quantidade >= quantidade) {
+            this.quantidade -= quantidade;
+        } else {
+            System.out.println("Quantidade insuficiente para remover.");
+        }
+
     }
 
     public void getexibirInformacoes() {
         System.out.println("\n--- Informações da Carteira: " + getIdCarteira() + " ---"
             + "\n ID do Usuário: " + getUsuario()
-            + ", ID do Ativo: " + getAtivo()
-            + ", Quantidade: " + getQuantidade()
+            + ", Id ativo: " + getIdCarteira()
+            + ", Quantidade disponível: " + getQuantidade()
             + ", Data: " + getData());
 
     }

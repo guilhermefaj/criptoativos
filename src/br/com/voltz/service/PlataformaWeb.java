@@ -51,11 +51,20 @@ public class PlataformaWeb {
         System.out.println("Gráfico gerado com base no monitoramento.");
     }
     public void adicionarCarteira(Carteira carteira, Usuario usuario){
-      if (carteira !=null && usuarios !=null ) {
-          carteirasPorUsuario.put(carteira, usuario);
+      if (buscarCarteiraPorUsuario(usuario) == null ) {
+          carteiras.add(carteira);
           System.out.println("Carteira adicionada para o usuário: "+ usuario);
       }else {
           System.out.println("Erro: Carteira ou usuário são nulos");
       }
+    }
+    public Object buscarCarteiraPorUsuario(Usuario usuario){
+        for(Carteira carteira: carteiras) {
+            if (carteira.getUsuario().equals(usuario)) {
+                return carteira;
+            }
+        }
+            return null;
+
     }
 }
