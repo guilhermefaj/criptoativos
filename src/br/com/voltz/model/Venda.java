@@ -1,15 +1,21 @@
 package br.com.voltz.model;
 
+import br.com.voltz.service.PlataformaWeb;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Venda extends Transacao{
     private double idVenda;
 
     public Venda(String idTransacao, double valor, Ativo ativo, double taxa, double idVenda) {
         super(idTransacao, valor, ativo, taxa);
         this.idVenda = idVenda;
+
     }
 
     public Venda(String idTransacao, double valor, Ativo ativo, double taxa) {
-        super(idTransacao, valor+ taxa, ativo, taxa);
+        super(idTransacao, valor, ativo, taxa);
     }
 
     public double getIdvenda() {
@@ -29,10 +35,10 @@ public class Venda extends Transacao{
     @Override
     public String getexecutarTransacao() {
         double valorComTaxa = getValor() - (getValor()* getTaxa());
-
         String valorFormatado = String.format("%.2f", valorComTaxa);
 
-       return "Venda " + idVenda + " de valor " + valorFormatado+ " executada em " + getData().toString() +
+
+        return "Venda " + idVenda + " de valor " + valorFormatado+ " executada em " + getData().toString() +
                " para o ativo " + getAtivo().getNome()+  "\n" +
               getTaxaTransacao();
 
@@ -42,5 +48,6 @@ public class Venda extends Transacao{
             return "Venda" + idVenda+ " valor: "+ getValor() + " Data: " + getData()+ " cancelada.";
 
        }
+
 
     }

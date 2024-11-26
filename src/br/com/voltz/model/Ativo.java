@@ -34,4 +34,5 @@ public class Ativo {
         return  "Nome: " + getNome() + "Valor Atual: " + getValorAtual();
     }
 
+
 }

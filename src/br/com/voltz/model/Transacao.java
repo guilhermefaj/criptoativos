@@ -1,6 +1,9 @@
 package br.com.voltz.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public abstract class Transacao {
     private String idTransacao;
@@ -8,6 +11,8 @@ public abstract class Transacao {
     private Date data;
     private Ativo ativo;
     private double taxa;
+
+
    
     public Transacao(String idTransacao, double valor, Ativo ativo, double taxa) {
         this.idTransacao = idTransacao;
@@ -45,5 +50,6 @@ public abstract class Transacao {
     public abstract String getcancelarTransacao();
 
     public abstract String getTaxaTransacao();
+
 
 }

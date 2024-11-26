@@ -2,6 +2,7 @@ package br.com.voltz.model;
 
 
 import java.util.Date;
+import java.util.List;
 
 public class Carteira {
     private String idCarteira;
@@ -51,4 +52,5 @@ public class Carteira {
             + "\n Quantidade disponível: " + getQuantidade()
             + "\n Data: " + getData());
     }
+
 }

@@ -6,6 +6,7 @@ import br.com.voltz.service.PlataformaWeb;
 import br.com.voltz.service.Seguranca;
 import br.com.voltz.model.Carteira;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -38,7 +39,8 @@ public class Main {
             System.out.println("4. Realizar Compra de um Criptoativo:");
             System.out.println("5. Gerar Relatório do Usuário");
             System.out.println("6. Exibir Carteira:");
-            System.out.println("7. Sair: ");
+            System.out.println("6. Exibir Transações:");
+            System.out.println("8. Sair: ");
             System.out.print("Escolha uma opção: ");
             
             try {
@@ -160,9 +162,9 @@ public class Main {
                             break;
                         }
                         
-                        Carteira carteiraExistente = (Carteira) plataforma.buscarCarteiraPorUsuario(usuarioLogado);
+                        Carteira carteiraUsuario= (Carteira) plataforma.buscarCarteiraPorUsuario(usuarioLogado);
                         
-                        if (carteiraExistente == null) {
+                        if (carteiraUsuario== null) {
                             Carteira novaCarteira = new Carteira(String.valueOf(System.currentTimeMillis()), usuarioLogado, null, 0.0, new Date());
                             System.out.println("O usuário " + usuarioLogado.getNome() + " não possui uma carteira, uma nova carteira será criada.");
                             plataforma.adicionarCarteira(novaCarteira, usuarioLogado);
@@ -170,8 +172,9 @@ public class Main {
                             novaCarteira.getexibirInformacoes();
                         } else {
                             System.out.println("Carteira do usuário " + usuarioLogado.getNome());
-                            carteiraExistente.getexibirInformacoes();
+                            carteiraUsuario.getexibirInformacoes();
                         }
+
                         break;
                     case 7:
                         // Sair do sistema
