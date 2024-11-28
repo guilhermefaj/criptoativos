@@ -55,23 +55,22 @@ public class PlataformaWeb {
         System.out.println("Gráfico gerado com base no monitoramento.");
     }
     public void adicionarCarteira(Carteira carteira, Usuario usuario){
-      if(carteirasPorUsuario.containsKey(usuario)){
-          System.out.println("ERRO : O usuário já possui uma carteira associada.");
-      }else{
-          carteiras.add(carteira);
-          carteirasPorUsuario.put(usuario, carteira);
-          System.out.println("Carteira adicionada com sucesso para o usuário: "+ usuario.getNome() );
-      }
+        if(carteirasPorUsuario.containsKey(usuario)){
+            System.out.println("ERRO : O usuário já possui uma carteira associada.");
+        }else{
+            carteiras.add(carteira);
+            carteirasPorUsuario.put(usuario, carteira);
+            System.out.println("Carteira adicionada com sucesso para o usuário: "+ usuario.getNome() );
+        }
     }
     public Carteira buscarCarteiraPorUsuario(Usuario usuario){
-       for ( Carteira carteira: carteiras){
-           if(carteira.getUsuario().equals(usuario)){
-               return carteira;
-           }
-       }
-       return null;
+        for ( Carteira carteira: carteiras){
+            if(carteira.getUsuario().equals(usuario)){
+                return carteira;
+            }
         }
-
+        return null;
     }
+    public List<Usuario> getUsuarios() { return usuarios; }
 
-
+}
