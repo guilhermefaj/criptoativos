@@ -55,10 +55,10 @@ public class Usuario {
 
     public void adicionarTransacao(Transacao transacao) {
         this.transacoes.add(transacao);
-        if (transacao instanceof Venda){ //Aumenta o valor
-            saldoTotal += transacao.getValor();
-        } else if (transacao instanceof Compra) { //Diminui o valor
+        if (transacao instanceof Venda) {
             saldoTotal -= transacao.getValor();
+        } else if (transacao instanceof Compra) {
+            saldoTotal += transacao.getValor();
         }
     }
 

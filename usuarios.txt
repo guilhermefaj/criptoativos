@@ -1,0 +1,16 @@
+Informações do usuário:
+  - ID: USR001
+  - Nome: Alice Silva
+  - Email: alice@email.com
+  - Senha: senha123
+Transações:
+  - Tipo: Compra, Ativo: Bitcoin, Valor: 25000.00, Taxa: 0.015
+
+Informações do usuário:
+  - ID: USR002
+  - Nome: Bob Santos
+  - Email: bob@email.com
+  - Senha: senha456
+Transações:
+  - Tipo: Venda, Ativo: Ethereum, Valor: 4000.00, Taxa: 0.015
+  - Tipo: Compra, Ativo: Dogecoin, Valor: 100.00, Taxa: 0.015

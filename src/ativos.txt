@@ -1,0 +1,3 @@
+ID: 1, Nome: Bitcoin, Valor: 250000.00
+ID: 2, Nome: Ethereum, Valor: 15000.00
+ID: 3, Nome: Dogecoin, Valor: 2.50

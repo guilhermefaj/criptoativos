@@ -10,8 +10,15 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
+    private static ArrayList<Usuario> usuariosTemporarios = new ArrayList<>();
+    private static HashMap<String, Carteira> mapaCarteiras = new HashMap<>();
+    private static ArrayList<Ativo> ativos = new ArrayList<>();
+    private static HashMap<String, List<Transacao>> mapaTransacoes = new HashMap<>();
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         PlataformaWeb plataforma = null;
@@ -24,10 +31,20 @@ public class Main {
             seguranca = new Seguranca("AES-256");
             monitoramento = new Monitoramento("monitor001");
             
+            System.out.println("Iniciando carregamento de usuários...");
             carregarUsuariosDeArquivo(plataforma);
+            
+            System.out.println("\nIniciando carregamento de ativos...");
+            carregarAtivosDeArquivo();
+            
+            System.out.println("\nAtivos disponíveis no sistema:");
+            for (Ativo ativo : ativos) {
+                System.out.println("- " + ativo.getNome() + " (ID: " + ativo.getId() + ") Valor: " + ativo.getValorAtual());
+            }
 
         } catch (Exception e) {
             System.out.println("Erro ao inicializar os serviços: " + e.getMessage());
+            e.printStackTrace();
             return;
         }
 
@@ -103,13 +120,22 @@ public class Main {
                             scanner.nextLine();
                             double idVenda = System.currentTimeMillis();
 
+                            Ativo ativoExistente = buscarAtivoPorNome(ativoNome);
+                            if (ativoExistente == null) {
+                                System.out.println("Ativo não encontrado");
+                                return;
+                            }
 
-                            Ativo ativo1 = new Ativo(String.valueOf(System.currentTimeMillis()), ativoNome, valorTransacao, 0.0);
-                            Venda venda = new Venda(String.valueOf(System.currentTimeMillis()), valorTransacao, ativo1, 0.015, idVenda);
+                            Venda venda = new Venda(String.valueOf(System.currentTimeMillis()), valorTransacao, ativoExistente, 0.015, idVenda);
                             System.out.println(venda.getexecutarTransacao());
 
                             usuarioLogado.adicionarTransacao(venda);
-                            ativo1.atualizarValor(valorTransacao);
+                            ativoExistente.atualizarValor(valorTransacao);
+
+                            if (!mapaTransacoes.containsKey(usuarioLogado.getId())) {
+                                mapaTransacoes.put(usuarioLogado.getId(), new ArrayList<>());
+                            }
+                            mapaTransacoes.get(usuarioLogado.getId()).add(venda);
                         } catch (Exception e) {
                             System.out.println("Erro ao realizar venda: " + e.getMessage());
                         }
@@ -121,26 +147,39 @@ public class Main {
                             break;
                         }
                         try {
-                            // Realizar uma transação compra
+                            Carteira carteiraUsuario = (Carteira) plataforma.buscarCarteiraPorUsuario(usuarioLogado);
+                            if (carteiraUsuario == null) {
+                                carteiraUsuario = new Carteira(String.valueOf(System.currentTimeMillis()), 
+                                    usuarioLogado, null, 0.0, new Date());
+                                plataforma.adicionarCarteira(carteiraUsuario, usuarioLogado);
+                                System.out.println("Nova carteira criada para o usuário.");
+                            }
+
                             System.out.print("Digite o nome do ativo: ");
                             String ativoCompra = scanner.nextLine();
                             System.out.print("Digite o valor da transação: ");
                             double valorCompra = scanner.nextDouble();
                             scanner.nextLine();
-                            double idCompra = System.currentTimeMillis();
 
-                            Ativo ativo2 = new Ativo(String.valueOf(System.currentTimeMillis()), ativoCompra, valorCompra, 0.0);
-                            Compra compra = new Compra(String.valueOf(System.currentTimeMillis()), valorCompra, ativo2, 0.015);
+                            Ativo ativoExistente = buscarAtivoPorNome(ativoCompra);
+                            if (ativoExistente == null) {
+                                System.out.println("Ativo não encontrado");
+                                break;
+                            }
+
+                            Compra compra = new Compra(String.valueOf(System.currentTimeMillis()), 
+                                valorCompra, ativoExistente, 0.015);
                             System.out.println(compra.getexecutarTransacao());
                             usuarioLogado.adicionarTransacao(compra);
-                            ativo2.atualizarValor(valorCompra);
+                            ativoExistente.atualizarValor(valorCompra);
 
-                            Carteira carteiraUsuario = (Carteira) plataforma.buscarCarteiraPorUsuario(usuarioLogado);
-                            if (carteiraUsuario != null) {
-                                carteiraUsuario.adicionarQuantidade(valorCompra, ativo2);
-                            } else {
-                                System.out.println("Erro: Carteira não encontrada");
+                            carteiraUsuario.adicionarQuantidade(valorCompra, ativoExistente);
+                            System.out.println("Compra realizada com sucesso!");
+                            
+                            if (!mapaTransacoes.containsKey(usuarioLogado.getId())) {
+                                mapaTransacoes.put(usuarioLogado.getId(), new ArrayList<>());
                             }
+                            mapaTransacoes.get(usuarioLogado.getId()).add(compra);
                         } catch (Exception e) {
                             System.out.println("Erro ao realizar compra: " + e.getMessage());
                         }
@@ -250,26 +289,39 @@ public class Main {
         try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
             String linha;
             String id = null, nome = null, email = null, senha = null;
+            boolean lendoUsuario = false;
 
             while ((linha = reader.readLine()) != null) {
-                if (linha.startsWith("ID: ")) {
-                    id = linha.substring(4).trim();
-                } else if (linha.startsWith("Nome: ")) {
-                    nome = linha.substring(6).trim();
-                } else if (linha.startsWith("Email: ")) {
-                    email = linha.substring(7).trim();
-                } else if (linha.startsWith("Senha: ")) {
-                    senha = linha.substring(7).trim();
+                if (linha.startsWith("Informações do usuário:")) {
+                    lendoUsuario = true;
+                    continue;
                 }
 
+                if (lendoUsuario) {
+                    if (linha.contains("ID:")) {
+                        id = linha.substring(linha.indexOf("ID:") + 4).trim();
+                    } else if (linha.contains("Nome:")) {
+                        nome = linha.substring(linha.indexOf("Nome:") + 6).trim();
+                    } else if (linha.contains("Email:")) {
+                        email = linha.substring(linha.indexOf("Email:") + 7).trim();
+                    } else if (linha.contains("Senha:")) {
+                        senha = linha.substring(linha.indexOf("Senha:") + 7).trim();
+                    }
 
-                if (id != null && nome != null && email != null && senha != null) {
-                    Usuario usuario = new Usuario(id, nome, email, senha);
-                    plataforma.registrarUsuario(usuario);
-
-
-
-                    id = nome = email = senha = null;
+                    if (id != null && nome != null && email != null && senha != null) {
+                        Usuario usuario = new Usuario(id, nome, email, senha);
+                        usuariosTemporarios.add(usuario);
+                        
+                        Carteira carteira = new Carteira(String.valueOf(System.currentTimeMillis()), 
+                            usuario, null, 0.0, new Date());
+                        mapaCarteiras.put(usuario.getId(), carteira);
+                        
+                        plataforma.registrarUsuario(usuario);
+                        
+                        // Resetar variáveis para próximo usuário
+                        id = nome = email = senha = null;
+                        lendoUsuario = false;
+                    }
                 }
             }
             System.out.println("Dados dos usuários carregados do arquivo.");
@@ -278,6 +330,45 @@ public class Main {
         }
     }
 
+    private static void carregarAtivosDeArquivo() {
+        File arquivo = new File("ativos.txt");
+        if (!arquivo.exists()) {
+            System.out.println("Arquivo 'ativos.txt' não encontrado.");
+            return;
+        }
 
+        ativos.clear();
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] partes = linha.split(", ");
+                if (partes.length == 3) {
+                    String id = partes[0].substring(partes[0].indexOf(":") + 1).trim();
+                    String nome = partes[1].substring(partes[1].indexOf(":") + 1).trim();
+                    double valor = Double.parseDouble(partes[2].substring(partes[2].indexOf(":") + 1).trim());
+                    
+                    Ativo ativo = new Ativo(id, nome, valor, 0.0);
+                    ativos.add(ativo);
+                    System.out.println("Ativo carregado: " + nome + " (ID: " + id + ") - Valor: " + valor);
+                }
+            }
+            System.out.println("\nTotal de ativos carregados: " + ativos.size());
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Erro ao carregar ativos: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static Ativo buscarAtivoPorNome(String nome) {
+        for (Ativo ativo : ativos) {
+            System.out.println("Comparando: '" + ativo.getNome() + "' com '" + nome + "'");
+            if (ativo.getNome().trim().equalsIgnoreCase(nome.trim())) {
+                return ativo;
+            }
+        }
+        System.out.println("Nenhum ativo encontrado com o nome: " + nome);
+        return null;
+    }
 
 }

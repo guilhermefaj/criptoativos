@@ -32,8 +32,12 @@ public class Carteira {
 
 
     public void adicionarQuantidade(double quantidade, Ativo ativo) {
-        this.quantidade += quantidade;
-        this.ativo = ativo;
+        if (this.ativo == null || this.ativo.getNome().equals(ativo.getNome())) {
+            this.quantidade += quantidade;
+            this.ativo = ativo;
+        } else {
+            System.out.println("Erro: Ativo diferente do existente na carteira");
+        }
     }
 
     public void removerQuantidade(double quantidade) {

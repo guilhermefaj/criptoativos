@@ -29,6 +29,10 @@ public class Ativo {
         System.out.println("Valor do ativo " + nome + " atualizado para " + valorAtual);
     }
 
+    public String getId() {
+        return idAtivo;
+    }
+
     @Override
     public String toString() {
         return  "Nome: " + getNome() + "Valor Atual: " + getValorAtual();

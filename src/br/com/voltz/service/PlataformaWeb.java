@@ -14,7 +14,7 @@ public class PlataformaWeb {
     private String nome;
     private List<Usuario> usuarios;
     private List<Carteira> carteiras = new ArrayList<>();
-    private final HashMap<Object, Object> carteirasPorUsuario;
+    private final HashMap<Usuario, Carteira> carteirasPorUsuario;
 
 
     public PlataformaWeb(String nome) {
