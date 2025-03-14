@@ -1,0 +1,7 @@
+Informações do usuário: 
+  - ID: 1733439126565
+  - Nome: a
+  - Email: a
+Transações:
+  - Nenhuma transação registrada
+

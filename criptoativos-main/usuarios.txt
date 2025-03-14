@@ -1,0 +1,7 @@
+Informações do usuário: 
+  - ID: null
+  - Nome: Guilherme 
+  - Email: Guilhermw@gmail.com
+Transações:
+  - Nenhuma transação registrada
+
