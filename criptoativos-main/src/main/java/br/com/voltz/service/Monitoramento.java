@@ -4,17 +4,50 @@ import br.com.voltz.model.Compra;
 import br.com.voltz.model.Transacao;
 import br.com.voltz.model.Usuario;
 import br.com.voltz.model.Venda;
-import br.com.voltz.model.Compra;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+
+
+import java.util.*;
 
 public class Monitoramento {
     private String idMonitoramento;
+    private Date data;
+    private PlataformaWeb plataformaWeb;
+
+    public Monitoramento() {
+    }
 
     public Monitoramento(String idMonitoramento) {
         this.idMonitoramento = idMonitoramento;
+    }
+
+    public Monitoramento(String idMonitoramento, Date data, PlataformaWeb plataformaWeb) {
+        this.idMonitoramento = idMonitoramento;
+        this.data = data;
+        this.plataformaWeb = plataformaWeb;
+    }
+
+    public String getIdMonitoramento() {
+        return idMonitoramento;
+    }
+
+    public void setIdMonitoramento(String idMonitoramento) {
+        this.idMonitoramento = idMonitoramento;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public PlataformaWeb getPlataformaWeb() {
+        return plataformaWeb;
+    }
+
+    public void setPlataformaWeb(PlataformaWeb plataformaWeb) {
+        this.plataformaWeb = plataformaWeb;
     }
 
     public void gerarRelatorioDiario() {
@@ -27,7 +60,7 @@ public class Monitoramento {
         Map<String, List<Transacao>> transacoesPorAtivo = new HashMap<>();
 
         for (Transacao transacao : usuario.getTransacoes()) {
-            String nomeAtivo = transacao.getAtivo().getNome();
+            String nomeAtivo = transacao.getAtivo().getNome().name();
             transacoesPorAtivo.computeIfAbsent(nomeAtivo, k -> new ArrayList<>()).add(transacao);
         }
 

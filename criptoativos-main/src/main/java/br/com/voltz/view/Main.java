@@ -1,6 +1,7 @@
 package br.com.voltz.view;
 
 import br.com.voltz.dao.UsuarioDao;
+import br.com.voltz.enumerations.AtivosEnum;
 import br.com.voltz.exception.entidadeNaoEncontrada;
 import br.com.voltz.model.*;
 import br.com.voltz.service.Monitoramento;
@@ -265,7 +266,7 @@ public class Main {
                 } else {
                     for (Transacao transacao : usuario.getTransacoes()) {
                         String tipoTransacao = transacao.getClass().getSimpleName();
-                        String nomeAtivo = transacao.getAtivo().getNome();
+                        String nomeAtivo = transacao.getAtivo().getNome().name();
 
                         double taxa = transacao.getTaxa();
                         double valorTransacao = transacao.getValor();
@@ -349,7 +350,8 @@ public class Main {
                 String[] partes = linha.split(", ");
                 if (partes.length == 3) {
                     String id = partes[0].substring(partes[0].indexOf(":") + 1).trim();
-                    String nome = partes[1].substring(partes[1].indexOf(":") + 1).trim();
+                    String nomeStr = partes[1].substring(partes[1].indexOf(":") + 1).trim();
+                    AtivosEnum nome = AtivosEnum.valueOf(nomeStr);
                     double valor = Double.parseDouble(partes[2].substring(partes[2].indexOf(":") + 1).trim());
 
                     Ativo ativo = new Ativo(id, nome, valor, 0.0);
@@ -367,7 +369,7 @@ public class Main {
     private static Ativo buscarAtivoPorNome(String nome) {
         for (Ativo ativo : ativos) {
             System.out.println("Comparando: '" + ativo.getNome() + "' com '" + nome + "'");
-            if (ativo.getNome().trim().equalsIgnoreCase(nome.trim())) {
+            if (ativo.getNome().name().trim().equalsIgnoreCase(nome.trim())) {
                 return ativo;
             }
         }

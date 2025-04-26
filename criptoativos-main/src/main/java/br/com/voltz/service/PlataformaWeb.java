@@ -3,24 +3,55 @@ package br.com.voltz.service;
 import br.com.voltz.model.Ativo;
 import br.com.voltz.model.Usuario;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 import br.com.voltz.model.Carteira;
 
 public class PlataformaWeb {
     private String nome;
+    private String idPlataforma;
     private List<Usuario> usuarios;
     private List<Carteira> carteiras = new ArrayList<>();
     private final HashMap<Usuario, Carteira> carteirasPorUsuario;
 
-
     public PlataformaWeb(String nome) {
+        this.idPlataforma = UUID.randomUUID().toString();
         this.nome = nome;
         this.usuarios = new ArrayList<>();
+        this.carteiras = new ArrayList<>();
         this.carteirasPorUsuario = new HashMap<>();
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getIdPlataforma() {
+        return idPlataforma;
+    }
+
+    public void setIdPlataforma(String idPlataforma) {
+        this.idPlataforma = idPlataforma;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public List<Carteira> getCarteiras() {
+        return carteiras;
+    }
+
+    public void setCarteiras(List<Carteira> carteiras) {
+        this.carteiras = carteiras;
+    }
+
+    public HashMap<Usuario, Carteira> getCarteirasPorUsuario() {
+        return carteirasPorUsuario;
     }
 
     public Usuario buscarUsuarioPorEmail(String email) {

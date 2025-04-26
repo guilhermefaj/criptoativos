@@ -1,12 +1,18 @@
 package br.com.voltz.model;
 
+import br.com.voltz.enumerations.TransacaoEnum;
 import br.com.voltz.service.PlataformaWeb;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Venda extends Transacao{
     private double idVenda;
+
+    public Venda (String idTransacao, double valor, Date data){
+        super(idTransacao,valor,data,null,null, TransacaoEnum.VENDA, 0.015);
+    }
 
     public Venda(String idTransacao, double valor, Ativo ativo, double taxa, double idVenda) {
         super(idTransacao, valor, ativo, taxa);

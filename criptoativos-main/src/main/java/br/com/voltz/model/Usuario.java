@@ -12,6 +12,9 @@ public class Usuario {
     private double saldoTotal;
     private  Carteira carteira;
 
+    public Usuario() {
+    }
+
     public Usuario(String id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;

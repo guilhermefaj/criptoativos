@@ -2,7 +2,6 @@ package br.com.voltz.model;
 
 
 import java.util.Date;
-import java.util.List;
 
 public class Carteira {
     private String idCarteira;
@@ -10,6 +9,10 @@ public class Carteira {
     private Ativo ativo;
     private double quantidade;
     private Date data;
+
+
+    public Carteira() {
+    }
 
     public Carteira(String idCarteira, Usuario usuario, Ativo ativo, double quantidade, Date data) {
         this.idCarteira = idCarteira;
@@ -27,9 +30,27 @@ public class Carteira {
 
     public double getQuantidade() { return quantidade; }
 
-    public Date getData() { return data; }
+    public java.sql.Date getData() { return (java.sql.Date) data; }
 
+    public void setIdCarteira(String idCarteira) {
+        this.idCarteira = idCarteira;
+    }
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setAtivo(Ativo ativo) {
+        this.ativo = ativo;
+    }
+
+    public void setQuantidade(double quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
 
     public void adicionarQuantidade(double quantidade, Ativo ativo) {
         if (this.ativo == null || this.ativo.getNome().equals(ativo.getNome())) {

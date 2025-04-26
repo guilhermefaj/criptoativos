@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Criptoativos</name>
-    <url>https://github.com/guilhermefaj/criptoativos.git</url>
+    <name></name>
+    <url></url>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
